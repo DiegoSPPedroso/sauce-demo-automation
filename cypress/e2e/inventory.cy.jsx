@@ -3,13 +3,13 @@ import { getProducts } from "../support/get_products"
 import { login } from "../support/login"
 
 const verifyItems = (products) => {
-    products.forEach((product, index) => {
+    products.forEach((products, index) => {
         cy.get(`.inventory_item:nth-child(${index + 1})`).within(() => {
-            cy.get('.inventory_item_img img').should('have.attr', 'src', product.image)
-            cy.get('.inventory_item_name').should('have.text', product.name)
-            cy.get('.inventory_item_desc').should('have.text', product.description)
-            cy.get('.inventory_item_price').should('contain', product.price)
-            cy.get('.btn_primary').should('have.text', 'ADD TO CART')
+            assertElement('.inventory_item_img img', { src: products.image })
+            assertElement('.inventory_item_name', { haveText: products.name })
+            assertElement('.inventory_item_desc', { haveText: products.description })
+            assertElement('.inventory_item_price', { contain: products.price })
+            assertElement('.btn_primary', { haveText: 'ADD TO CART' })
         })
     })
 }
