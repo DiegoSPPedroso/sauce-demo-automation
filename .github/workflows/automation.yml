@@ -50,7 +50,7 @@ jobs:
           npm install
           export CYPRESS_BASE_URL=https://www.saucedemo.com/v1/
           if [[ "$testSelection" == "All" ]]; then
-            npm run cypress:admin:run
+            npm run cypress run
           else
-            npm run cypress:admin:run -- --spec "$TEST_PATH"
+            npm run cypress run -- --spec "$TEST_PATH"
           fi
