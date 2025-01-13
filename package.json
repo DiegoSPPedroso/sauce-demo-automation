@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run --browser chrome"
   },
   "devDependencies": {
     "cypress": "^13.17.0"
