@@ -1,0 +1,56 @@
+name: Automated Tests - Sauce Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      adminEnvironmentUrl:
+        default: "https://www.saucedemo.com/v1/"
+        description: "Sauce Demo Automation"
+        required: true
+      testSelection:
+        description: "Select the tests to run"
+        required: true
+        type: choice
+        options:
+          - "All"
+          - "Login"
+          - "Inventory"
+
+env:
+  DOMAIN_ADMIN: https://www.saucedemo.com/v1/
+  PATH_ADMIN: sauce-demo-automation
+  TEST_PATH: ""
+
+jobs:
+  cypress-tests:
+    name: Automation - Sauce Demo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Test Path
+        run: |
+          case "$testSelection" in
+            "Inventory")
+              echo "TEST_PATH=cypress/e2e/inventory.cy.jsx" >> $GITHUB_ENV
+              ;;
+            "Login")
+              echo "TEST_PATH=cypress/e2e/login.cy.jsx" >> $GITHUB_ENV
+              ;;
+            "All")
+              echo "TEST_PATH=cypress/e2e/**/*.cy.{js,jsx}" >> $GITHUB_ENV
+              ;;
+          esac
+
+      - name: Set Dynamic Job Name
+        run: echo "JOB_NAME=Automated Tests - Sauce Demo" >> $GITHUB_ENV
+
+      - name: Execute Cypress Tests
+        run: |
+          npm install
+          export CYPRESS_BASE_URL=https://www.saucedemo.com/v1/
+          if [[ "$testSelection" == "All" ]]; then
+            npm run cypress:admin:run
+          else
+            npm run cypress:admin:run -- --spec "$TEST_PATH"
+          fi
