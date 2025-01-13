@@ -31,7 +31,6 @@ const loginAttempt = (email, password) => {
   assertElement('#login-button', { click: true })
 }
 
-
 const errorsLoginAttempt = (msg) => {
   assertElement('.error-button > svg', { dataIcon: 'times-circle', role: 'img', viewBox: '0 0 512 512' })
   assertElement('.login-box h3', { contain: 'Epic sadface:' })
@@ -56,33 +55,33 @@ describe('Sauce Demo - login', () => {
     loginAttempt('       ', '       ')
     errorsLoginAttempt(errorMessages.invalidCredentials)
 
-    //Login attempt using corret email, but incorret password
+    //Login attempt using correct email, but incorret password
     loginAttempt(data.standardUser, 'password')
     errorsLoginAttempt(errorMessages.invalidCredentials)
 
-    //Login attempt using incorret email, but corret password
+    //Login attempt using incorrect email, but correct password
     loginAttempt('username', data.password)
     errorsLoginAttempt(errorMessages.invalidCredentials)
 
-    //Login attempt using email and corret password
+    //Login attempt using email and correct password
     loginAttempt(data.standardUser, data.password)
     assertElement('.product_label', { haveText: 'Products' })
   })
 
   it('Login with lockedOutUser', () => {
-    //Login attempt using email and corret password
+    //Login attempt using email and correct password
     loginAttempt(data.lockedOutUser, data.password)
     errorsLoginAttempt(errorMessages.lockedOut)
   })
 
   it('Login with problemUser', () => {
-    //Login attempt using email and corret password
+    //Login attempt using email and correct password
     loginAttempt(data.problemUser, data.password)
     assertElement('.product_label', { haveText: 'Products' })
   })
 
   it('Login with performanceGlitchUser', () => {
-    //Login attempt using email and corret password
+    //Login attempt using email and correct password
     loginAttempt(data.performanceGlitchUser, data.password)
     assertElement('.product_label', { haveText: 'Products' })
   })

@@ -18,6 +18,7 @@ export const assertElement = (
         viewBox,
         click = false,
         write,
+        select
     } = {}
 ) => {
     const getLoc = cy.get(locator)
@@ -43,4 +44,5 @@ export const assertElement = (
     if (viewBox) checkAttribute('viewBox', viewBox)
     if (click) getLoc.click(click === true ? {} : click)
     if (write) getLoc.click().clear().type(write)
+    if (select) getLoc.select(select)
 }
