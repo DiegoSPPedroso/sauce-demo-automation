@@ -23,14 +23,14 @@ env:
 
 jobs:
   cypress-tests:
-    name: Automation - Sauce Demo
+    name: Automation - ${{ github.event.inputs.testSelection }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Set Test Path
         run: |
-          case "$testSelection" in
+          case "${{ github.event.inputs.testSelection }}" in
             "Inventory")
               echo "TEST_PATH=cypress/e2e/inventory.cy.jsx" >> $GITHUB_ENV
               ;;
@@ -43,14 +43,14 @@ jobs:
           esac
 
       - name: Set Dynamic Job Name
-        run: echo "JOB_NAME=Automated Tests - Sauce Demo" >> $GITHUB_ENV
+        run: echo "JOB_NAME=Automated Tests - Sauce Demo - ${{ github.event.inputs.testSelection }}" >> $GITHUB_ENV
 
       - name: Install dependencies and Execute Cypress Tests
         run: |
           npm install
           export CYPRESS_BASE_URL=https://www.saucedemo.com/v1/
-          if [[ "$testSelection" == "All" ]]; then
+          if [[ "${{ github.event.inputs.testSelection }}" == "All" ]]; then
             npm run cypress:run
           else
-            npm run cypress:run -- --spec "$TEST_PATH"
+            npm run cypress:run -- --spec "${{ env.TEST_PATH }}"
           fi
