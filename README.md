@@ -5,4 +5,5 @@ My goal is to demonstrate my knowledge of the Cypress framework.
 
 Contains:
 * Login automation - Complete (with coverage of some error scenarios);
+* Inventory automation - Complete;
 * Cypress Action running on each deploy to the main branch.
