@@ -45,12 +45,12 @@ jobs:
       - name: Set Dynamic Job Name
         run: echo "JOB_NAME=Automated Tests - Sauce Demo" >> $GITHUB_ENV
 
-      - name: Execute Cypress Tests
+      - name: Install dependencies and Execute Cypress Tests
         run: |
           npm install
           export CYPRESS_BASE_URL=https://www.saucedemo.com/v1/
           if [[ "$testSelection" == "All" ]]; then
-            npm cypress run
+            npm run cypress:run
           else
-            npm cypress run -- --spec "$TEST_PATH"
+            npm run cypress:run -- --spec "$TEST_PATH"
           fi
