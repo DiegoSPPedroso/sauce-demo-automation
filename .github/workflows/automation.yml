@@ -24,7 +24,7 @@ env:
 jobs:
   cypress-tests:
     name: Automation - ${{ github.event.inputs.testSelection }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
 
